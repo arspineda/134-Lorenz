@@ -1,4 +1,5 @@
 \documentclass{report}
+\usepackage{amsmath}
 \begin{document}
 \chapter{Introduction to Chaos in the Lorenz System}
 \section{Preamble}
@@ -23,6 +24,111 @@ simulation when deriving the behavior of the system by hand proves intractable.
 \section{Stability Analysis}
 
 We first state the Lorenz equations:
-\[ x = y\]
+\begin{align*}
+   \dot{x} = \sigma y - \sigma x \\
+   \dot{y} = rx - y - xz \\
+   \dot{z} = xy - bz
+\end{align*}
+where \( \sigma , b, and r \) are parameters greater than zero. Our first goal is to
+locate the fixed points of the system and identify their behavior. Setting
+\( \dot{x}, \dot{y}, and \dot{z}\) to zero, we have
+\begin{align*}
+   x = y \\
+   (r-z)x - y = 0 \\
+   xy = bz
+\end{align*}
+Replacing y with x as given in the first equation:
+\begin{align*}
+  x = y \\
+  (r-z-1)x = 0 \longrightarrow x = 0 or z = r-1 \\
+  x^2 = bz
+\end{align*}
+
+We see that three fixed points are possible: \( \boldsymbol{x\mbox{*}} = (0,0,0),(\sqrt{b(r-1)},\sqrt{b(r-1)},r-1)\), and \((-\sqrt{b(r-1)},-\sqrt{b(r-1)},r-1)\).
+The fixed point at the origin exists for all choices of r, while the symmetric 
+pair of fixed points will only exist if \(r > 1\). In fact, a supercritical 
+pitchfork bifurcation occurs at the origin when \( r = 1 \).
+
+The Jacobian matrix for the Lorenz system i
+\[
+\begin{bmatrix}
+   -\sigma & \sigma & 0 \\
+   r - z & -1 & -x \\
+   y & x & -b
+\end{bmatrix}
+\]
+
+For the fixed point at the origin, the linearization of the system becomes
+\[
+\begin{bmatrix}
+   -\sigma & \sigma & 0 \\
+   r & -1 & 0 \\
+   0 & 0 & -b
+
+\end{bmatrix}
+\]
+The z component decays exponentially, while the behavior of x and y depends on 
+r: for \( r < 1\), the determinant of the matrix containing only x and y is
+\(\sigma - r\sigma > 0\), and the trace is negative. We find the discriminant 
+\(tr^2 - 4det = \sigma^2 +2\sigma + 1 -4(\sigma -r\sigma) = (\sigma - 1)^2 +
+  4r\sigma\). Since r and \(\sigma > 0 \), we have \(tr^2 -4det > 0\), which 
+means that the fixed point at the origin is a stable node. When \(r > 1\), on 
+the other hand, the origin changes stability and becomes a saddle node, and the
+fixed points \(C^+\) and \(C^-\) appear. If this is a supercritical pitchfork
+bifurcation we expect these to be stable.
+
+The linearization of \(C^+\) and \(C^-\) is as follows:
+\[
+\begin{bmatrix}
+   -\sigma & \sigma & 0 \\
+   1 & -1 & -d \\
+   d & d & -b
+\end{bmatrix}
+\]
+Where \(d = \pm \sqrt{b(r-1)}\). When we derive the characteristic polynomial 
+for this linearization we find that they are identical, so we only show the
+process for positive \(d\). Now we see that the behavior of z is no longer
+decoupled from x or y, so we cannot simplify the analysis to the 2-dimensional
+case. Instead, we find the eigenvalues directly:
+\begin{align*}
+  det(A-\lambda I) = (-\sigma-\lambda)((-1-\lambda)(-b-\lambda)+d^2 )-
+  \sigma(-b-\lambda+d^2) \\
+  \quad = (\lambda^2 +(\sigma+1)\lambda+\sigma)(-b-\lambda)+
+d^2(-\sigma-\lambda)+b\sigma+\sigma\lambda-\sigma d^2 \\
+  \quad = (-1)(\lambda^3 +(\sigma + b + 1)\lambda^2 +(b\sigma+\sigma+b)\lambda
++b\sigma)+b\sigma+(\sigma-d^2)\lambda-2\sigma d^2
+\end{align*}
+We let \(det(A-\lambda I) = 0\), which allows us to simplify the polynomial
+into its most useful form:
+\begin{align*}
+  det(A-\lambda I) = \lambda^3 + (\sigma+b+1)\lambda^2 + b(\sigma+r)\lambda
++ 2\sigma b(r-1) = 0
+\end{align*}
+Finding the eigenvalues for this linearization for certain parameter values
+is computationally laborious, but possible. When we set \(\sigma = 10\),
+\(b=8/3\), and vary our choice of \(r\), we find that for some r we get
+complex eigenvalues with negative real part, implying that \(C^+\) and \(C^-\)
+are stable spirals at some point. To show this analytically, we will actually
+find the value of \(r\) at which a pair of purely imaginary solutions appear.
+We call this value \(r_H\), and by deriving this we learn that \(C^+\) and
+\(C^-\) undergo Hopf bifurcations. 
+
+Suppose we do have a pair of purely imaginary eigenvalues \(\lambda = \pm
+i\omega\), where \(\omega\) is real, and that \( \sigma > b+1 \). Then the
+characteristic polynomial is re-expressed as a complex number (it suffices
+just to use the positive imaginary eigenvalue):
+\begin{align*}
+   -i\omega^3 - (\sigma + b + 1)\omega^2 + ib(\sigma + r)\omega
++ 2\sigma b(r-1) = 0 \\
+   \rightarrow i(-\omega^3 +\omega b(\sigma + r) + 2\sigma b(r-1) -
+(\sigma+b+1)\omega^2 = 0
+\end{align*}
+Since \(\omega\) and the parameters are all real, the above implies both
+the real and imaginary parts of the equation must equal 0 as well. From this
+we find a pair of equations:
+\begin{align}
+   -\omega^3 +\omega b(\sigma+r) = 0 \\
+   -(\sigma +b+1)\omega^2 + 2\sigma b(r-1) = 0
+\end{align}
 
 \end{document}
