@@ -1,5 +1,7 @@
 \documentclass{report}
 \usepackage{amsmath}
+\usepackage{graphicx}
+
 \begin{document}
 \chapter{Introduction to Chaos in the Lorenz System}
 \section{Preamble}
@@ -21,7 +23,7 @@ dynamic system. The goal of our report is to explore the basics of dynamical
 chaos through an analysis of the Lorenz equations, relying on computer
 simulation when deriving the behavior of the system by hand proves intractable.
 
-\section{Stability Analysis}
+\section{Fixed Point Analysis}
 
 We first state the Lorenz equations:
 \begin{align*}
@@ -120,15 +122,91 @@ just to use the positive imaginary eigenvalue):
 \begin{align*}
    -i\omega^3 - (\sigma + b + 1)\omega^2 + ib(\sigma + r)\omega
 + 2\sigma b(r-1) = 0 \\
-   \rightarrow i(-\omega^3 +\omega b(\sigma + r) + 2\sigma b(r-1) -
+   \rightarrow i(-\omega^3 +\omega b(\sigma + r) + 2\sigma b(r-1)) -
 (\sigma+b+1)\omega^2 = 0
 \end{align*}
 Since \(\omega\) and the parameters are all real, the above implies both
 the real and imaginary parts of the equation must equal 0 as well. From this
 we find a pair of equations:
-\begin{align}
+\begin{align*}
    -\omega^3 +\omega b(\sigma+r) = 0 \\
    -(\sigma +b+1)\omega^2 + 2\sigma b(r-1) = 0
-\end{align}
+\end{align*}
+Our goal is to find an expression for \(r\). Through some rearrangement we
+get
+\begin{align*}
+   b(\sigma+r) = \omega^2 \\
+   \frac{2\sigma b(r-1)}{\sigma +b+1} = \omega^2 
+\end{align*}
+which we can merge into one equation that we rewrite to isolate r, and so
+obtain the Hopf bifurcation value:
+\begin{align*}
+   2\sigma br -(\sigma +b+1)br = b\sigma(\sigma+b+1)+2\sigma b \\
+   \rightarrow r = r_H = \sigma \frac{\sigma+b+3}{\sigma-b-1}
+\end{align*}
+Note that our assumption that \( \sigma > b+1 \) was necessary, or else we
+either fail to derive the equation for r, or the equation implies r is
+negative, a contradiction to our constraints on the parameters. A symbolic
+solver in Mathematica confirms our derivation of \(r_H\) and also tells us
+that the third eigenvalue is \(\lambda = -1-b-\sigma\), which is negative.
+The computation can be found in the corresponding Mathematica notebook file.
 
+Unfortunately this does not give any information as to whether \(C^+\) and
+\(C^-\) at \(r_h\) are supercritical or subcritical, but knowing that they
+are Hopf bifurcations does confirm that they are locally stable spirals for
+\(r < r_h\). Combined with the fact that the third eigenvalue is negative,
+we conclude that before the bifurcations \(C^+\) and \(C^-\) are stable.
+It has been shown that the bifurcation is in fact subcritical\cite{strogatz15}
+\cite{sparrow82}, which means that soon after the bifurcation, the (unstable)
+limit cycles disappear and all fixed points of the system are unstable. This
+sets up the conditions under which the Lorenz sytem behaves chaotically.
+
+\section{Properties of the Lorenz System Leading to the Strange Attractor}
+
+When \(r\) passes the Hopf bifurcation value \(r_H\), it is unclear how
+trajectories in the system will behave. Do new limit cycles appear? Do
+trajectories approach infinity? We prove a couple of properties of the Lorenz
+system that effectively bound the long-term behavior of its trajectories.
+
+First we show that the Lorenz equations form a volume-dissipating system. The
+derivation appears in Strogatz\cite{strogatz15}, but we reproduce it here.
+We let the Lorenz system be represented by a vector function
+\(\boldsymbol{f}(\boldsymbol{x})\), and \(V(t)\) a volume whose value changes
+with respect to the Lorenz system, with surface \(S(t)\). Then
+\begin{align*}
+  \dot{V} = \int_S (\boldsymbol{f}\cdot\boldsymbol{n}dA
+\end{align*}
+and by the divergence theorem:
+\begin{align*}
+  \dot{V} = \int_V \nabla\cdot\boldsymbol{f}dV \\
+  \nabla\cdot\boldsymbol{f} = \frac{\partial}{\partial x}[\sigma(y-x)]
++\frac{\partial}{\partial y}[rx-y-z] + \frac{\partial}{\partial z}[xy-bz] \\
+  \rightarrow = -\sigma -1-b < 0 
+\end{align*}
+The divergence here is constant and negative, which means volumes \(V\) shrink
+exponentially fast.
+
+A second, analogous property is that an ellipsoid exists so that all
+trajectories eventually enter it and stay in there forever. Let there be an
+ellipsoid of form \(rx^2 +\sigma y^2+\sigma(z-2r)^2 \leq C\)
+\section{Changes over Parameter Space over \(r\)}
+
+
+
+\begin{thebibliography}{9}
+
+\bibitem{strogatz15}
+  Steven H. Strogatz,
+  \emph{Nonlinear Dynamics and Chaos: with Applications to Physics, Biology,
+Chemistry, and Engineering},
+  Westfield Press, Colorado,
+  2nd edition,
+  2015.
+
+\bibitem{sparrow82}
+  Colin Sparrow,
+  \emph{The Lorenz Equations: Bifurcations, Chaos, and Strange Attractors}
+  Springer-Verlag, New York,
+  1982.
+\end{thebibliography}
 \end{document}
