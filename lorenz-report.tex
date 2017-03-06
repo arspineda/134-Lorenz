@@ -1,6 +1,7 @@
 \documentclass{report}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\graphicspath{ {./diagrams/} }
 
 \begin{document}
 \chapter{Introduction to Chaos in the Lorenz System}
@@ -19,7 +20,16 @@ never settle into any predictable long-term behavior. Furthermore, solutions
 that begin with similar initial conditions may actually fly apart in the 
 system, so that it becomes difficult to extrapolate the motion of a trajectory 
 from the starting point. These traits fall under the definition of chaos in a
-dynamic system. The goal of our report is to explore the basics of dynamical 
+dynamic system. The term \emph{chaos} in this context is distinguished from
+being nondeterministic or random. We reference the definition of chaos
+suggested by Strogatz\cite{strogatz15}: "Chaos is aperiodic long-term behavior
+in a deterministc system that exhibits sensitive dependence on initial
+conditions." A chaotic system is aperiodic in that as \(t \rightarrow \infty\),
+trajectories do not approach any fixed points, periodic orbits, or quasiperiodic
+orbits, deterministic in that no noise or random information is a part of the
+system, and sensitive in that neighboring trajectories tend to move far apart.
+
+The goal of our report is to explore the basics of dynamical 
 chaos through an analysis of the Lorenz equations, relying on computer
 simulation when deriving the behavior of the system by hand proves intractable.
 
@@ -188,11 +198,76 @@ exponentially fast.
 
 A second, analogous property is that an ellipsoid exists so that all
 trajectories eventually enter it and stay in there forever. Let there be an
-ellipsoid of form \(rx^2 +\sigma y^2+\sigma(z-2r)^2 \leq C\)
+ellipsoid of form \(rx^2 +\sigma y^2+\sigma(z-2r)^2 \leq C\).
+
+\section{Transition to Chaos}
+
+Given what we have learned about the Lorenz system, we know trajectories will
+not trend towards infinity, and for many values of \( r > r_H\), no new limit
+cycles appear. (There are windows of r where in fact new period cycles appear,
+but we will cover that later.) In that case, numerical experiments show that
+trajectories begin to behave chaotically. In the analysis to follow, we use
+numerical computation to generate trajectories and their component graphs, and
+we select pairs of trajectories and plot the distance between them over time.
+The scope of our paper is limited, so we defer use of more analytical tools.
+
 \section{Changes over Parameter Space over \(r\)}
 
+Using Mathematica, we generated diagrams that map out the changes in the
+Lorenz system as r changes. See that for \(r < 1\) that only one fixed point
+exists and all trajectories funnel towards it, but as \(r\) increases two new
+fixed points are generated, and a distinct palmier shape is drawn out by
+the trajectories. Note that, for our calculations, we set \(\sigma = 10\) and
+\(b = 8/3 \) fixed for all values of \(r\), in accordance with Lorenz's
+original experiments. This means \(r_H \approx 24.7\).
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{r0.5.eps}
+  \caption{Plot of selected trajectories for r = 0.5}
+  \label{fig:r_small}
+\end{figure}
+Figure \ref{fig:r_small} exhibits trajectories that move in in oblique arcs
+as the z component dissipates.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{r10.eps}
+  \caption{Trajectories for r = 10}
+  \label{fig:r_10}
+\end{figure}
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{r20.eps}
+  \caption{Trajectories for r = 20}
+  \label{fig:r_20}
+\end{figure}
+The next two figures illustrate what happens around the two new fixed points
+\(C^+\) and \(C^-\). We see that in Figure \ref{fig:r_10} the purple and
+orange trajectories begin on one side of the figure but both spiral into one
+fixed point, while the red and blue trajectories begin close enough to the
+other fixed point to remain there. By r = 20, some trajectories are progressing
+towards their fixed points but others are volleyed in between the two lobes.
+Current literature describes this phenomenon as "intermittent chaos": short
+term trajectories move around aperiodically before reaching a fixed point,
+and as we see, the time it may take before a trajectory is 'trapped' within
+the radius of a fixed point can vary.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{r28.eps}
+  \caption{Trajectories for r = 28}
+  \label{fig:r_28}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{r40.eps}
+  \caption{Trajectories for r = 40}
+  \label{fig:r_40}
+\end{figure}
+
+Once \(r > r_H \approx 24.7 \), chaotic behavior begins to appear.
 \begin{thebibliography}{9}
 
 \bibitem{strogatz15}
