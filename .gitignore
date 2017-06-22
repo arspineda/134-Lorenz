@@ -1,0 +1,5 @@
+# Intermediate LaTeX files #
+*.aux
+*.ps
+*.dvi
+*.log
