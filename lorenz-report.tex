@@ -58,6 +58,8 @@ Replacing y with x as given in the first equation:
 
 We see that three fixed points are possible: \(\boldsymbol{x\mbox{*}} = (0,0,0)\),
 \((\sqrt{b(r-1)},\sqrt{b(r-1)},r-1)\), and \((-\sqrt{b(r-1)},-\sqrt{b(r-1)},r-1)\).
+For the rest of the paper we let \(C^+ =(\sqrt{b(r-1)},\sqrt{b(r-1)},r-1)\) and
+\(C^- =(-\sqrt{b(r-1)},-\sqrt{b(r-1)},r-1)\).
 The fixed point at the origin exists for all choices of r, while the symmetric 
 pair of fixed points will only exist if \(r > 1\). In fact, a supercritical 
 pitchfork bifurcation occurs at the origin when \( r = 1 \).
@@ -281,6 +283,14 @@ in the Mathematica animations). The other trajectories are further spread
 out on the attractor. By \(r = 40\) the chaotic behavior of the attractor is
 abundantly clear.
 
+Not displayed here but relevant to our discussion is our plots of distances
+between nearby trajectories against time. For \(r\) in the chaotic range we
+measured the distance between two trajectories starting some distance \(d_o\)
+apart over time, then plotted the natural log of them against time. We were
+able to determine that the distances grew apart exponentially, as the slope
+of a line fitting the plot was positive. In other words, we found the plot
+in order to approximate the Liapunov exponent for the system. Complete graphs
+for multiple choices of \(r\) can be found in the Mathematica file.
 
 \begin{figure}[ht]
   \centering
@@ -305,7 +315,7 @@ abundantly clear.
 
 Figures \ref{fig:z-r20}, \ref{fig:z-r28} and \ref{fig:z-r40} all illustrate the
 position of the z component of the red trajectory, for each r. Whereas for
-\(r=20\) the graph exhibits some irregular behvior before decaying in regular
+\(r=20\) the graph exhibits some irregular behavior before decaying in regular
 oscillation, for \(r=28\) and \(r=40\) no portion of the graph recurs
 periodically, at least for the range of t given. This fulfills one cornerstone
 of chaotic behavior, that the (long-term) behavior is aperiodic.
